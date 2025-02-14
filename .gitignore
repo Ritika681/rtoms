@@ -1,0 +1,12 @@
+#ignore python cache files and folders
+__pycache__/
+*.pyd
+*.pyc
+*.pyo
+
+#ignore virtual env files
+venv/
+.env
+
+#ignore docker files
+*.log
