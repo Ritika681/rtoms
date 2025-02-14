@@ -4,5 +4,11 @@
 2. pip install fastapi uvicorn
 3. python.exe -m pip install --upgrade pip
 
+#### install test dependencies
+pip install pytest httpx pytest-asyncio
+
+#### to run tests 
+pytest tests --disable-warnings
+
 ## Run main app
 4. python main.py
