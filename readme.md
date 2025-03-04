@@ -12,3 +12,7 @@ pytest tests --disable-warnings
 
 ## Run main app
 4. python main.py
+
+
+# For Tests in local
+pip install pytest-asyncio
