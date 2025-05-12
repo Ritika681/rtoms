@@ -32,4 +32,4 @@ jobs:
 
       - name: Run tests
         run: |
-          python -m TEST_ENV=1 pytest tests --disable-warnings
+          TEST_ENV=1 python -m pytest tests --disable-warnings
