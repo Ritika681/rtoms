@@ -1,7 +1,5 @@
 import pytest_asyncio
-from sqlmodel.ext.asyncio.session import AsyncSession
-from database import engine, SessionLocal
-from app.model.models import User, Order
+from database import SessionLocal
 
 @pytest_asyncio.fixture()
 async def test_session():
