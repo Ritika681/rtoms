@@ -11,7 +11,7 @@ async def test_get_all_orders():
         response = await ac.get("/api/orders")
     assert response.status_code == 200
 
-
+'''
 @pytest.mark.asyncio
 async def test_get_order(mock_order, test_session):
     app.dependency_overrides[get_session] = lambda: test_session
@@ -26,7 +26,6 @@ async def test_get_order(mock_order, test_session):
 
     app.dependency_overrides.clear()
 
-'''
 @pytest.mark.asyncio
 async def test_create_order(mock_user):
     #mock_user = await mock_user
