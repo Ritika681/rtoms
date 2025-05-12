@@ -2,8 +2,6 @@ import pytest_asyncio
 from sqlmodel.ext.asyncio.session import AsyncSession
 from database import engine, SessionLocal
 from app.model.models import User, Order
-import pytest_asyncio
-
 
 @pytest_asyncio.fixture()
 async def test_session():
@@ -28,7 +26,7 @@ async def prepare_test_db():
     async with engine.begin() as conn:
         await conn.run_sync(SQLModel.metadata.drop_all)
         await conn.run_sync(SQLModel.metadata.create_all)
-'''
+
 @pytest_asyncio.fixture()
 async def mock_user(test_session: AsyncSession):
     user = User(name="Test User", email="test@example.com")
@@ -51,3 +49,4 @@ async def mock_order(test_session: AsyncSession, mock_user: User):
     await test_session.commit()
     await test_session.refresh(order)
     return order
+'''
