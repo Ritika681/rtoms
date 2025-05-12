@@ -29,8 +29,7 @@ jobs:
           pip install "pytest-asyncio>=0.20"
           pip install sqlmodel aiomysql
           pip install -r requirements.txt || echo "Skip requirements if not found"
-          TEST_ENV=1 pytest tests --disable-warnings
-          
+
       - name: Run tests
         run: |
-          python -m pytest tests --disable-warnings
+          python -m TEST_ENV=1 pytest tests --disable-warnings
