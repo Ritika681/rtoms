@@ -15,6 +15,7 @@ class OrderCreate(BaseModel):
     status: str
     items: List[str]
     tracking: str
+    userId: int
 
 
 class OrderUpdate(BaseModel):
@@ -33,7 +34,8 @@ async def create_order(order: OrderCreate, session: AsyncSession = Depends(get_s
         orderId=order.orderId,
         status=order.status,
         items=json.dumps(order.items),
-        tracking=order.tracking
+        tracking=order.tracking,
+        userId=order.userId
     )
     session.add(db_order)
     await session.commit()
@@ -51,7 +53,8 @@ async def get_order(orderId: int, session: AsyncSession = Depends(get_session)):
         "orderId": order.orderId,
         "status": order.status,
         "items": json.loads(order.items),
-        "tracking": order.tracking
+        "tracking": order.tracking,
+        "userId": order.userId
     }
 
 
@@ -118,7 +121,8 @@ async def get_all_orders(
             "orderId": order.orderId,
             "status": order.status,
             "items": json.loads(order.items),
-            "tracking": order.tracking
+            "tracking": order.tracking,
+            "userId": order.userId
         })
 
     return {"page": page, "size": size, "orders": orders}

@@ -5,7 +5,13 @@ from sqlalchemy.orm import sessionmaker
 from typing import AsyncGenerator
 
 
-DATABASE_URL = "mysql+aiomysql://root:root@localhost:3306/rtoms"
+DB_USERNAME = "root"
+DB_PASSWORD = "root"
+DB_HOST = "localhost"
+DB_PORT = "3306"
+DB_NAME = "rtoms"
+
+DATABASE_URL = f"mysql+aiomysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 engine = create_async_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
