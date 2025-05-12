@@ -27,6 +27,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest httpx fastapi
           pip install "pytest-asyncio>=0.20"
+          pip install sqlmodel aiomysql
           pip install -r requirements.txt || echo "Skip requirements if not found"
 
       - name: Run tests
