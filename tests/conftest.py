@@ -1,10 +1,11 @@
 import pytest
 import asyncio
 import sys
+import pytest_asyncio
 
-@pytest.fixture(scope="session")
+@pytest_asyncio.fixture(scope="session")
 def event_loop():
-    """Ensures an event loop works correctly on Windows."""
+    """Ensure a fresh event loop is used for Windows compatibility."""
     if sys.platform == "win32":
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
