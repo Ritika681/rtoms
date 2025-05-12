@@ -1,8 +1,6 @@
 import pytest
 from httpx import AsyncClient, ASGITransport
 from app.main import app
-from database import get_session
-from fastapi.testclient import TestClient
 
 @pytest.mark.asyncio
 async def test_get_all_orders():
