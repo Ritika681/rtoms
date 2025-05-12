@@ -1,18 +1,20 @@
 # Use official Python image
-FROM python:3.9
+FROM python:3.11
 
 # Set working directory
 WORKDIR /app
 
-#Ensure the whole project is copied
-COPY . . 
 # Copy files to container
 #COPY main.py /app/
 
 COPY requirements.txt /app/
 
 # Install dependencies
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+
+#Ensure the whole project is copied
+COPY . . 
 
 # Expose port
 EXPOSE 8000

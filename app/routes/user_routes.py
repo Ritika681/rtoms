@@ -3,7 +3,7 @@ from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
 from typing import List
 from database import get_session
-from model.models import User, Order
+from app.model.models import User, Order
 import json
 
 router = APIRouter(prefix="/api/users", tags=["Users"])

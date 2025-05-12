@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Query, Depends
 from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
 from typing import List
-from model.models import Order
+from app.model.models import Order
 from database import get_session
 from pydantic import BaseModel
 import json
