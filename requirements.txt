@@ -22,6 +22,7 @@ uvicorn==0.34.0
 sqlmodel>=0.0.8
 aiomysql>=0.1.0
 aiosqlite>=0.17.0
+cryptography
 
 # Test dependencies
 pytest
