@@ -6,6 +6,7 @@ class User(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
     email: str
+    phoneNumber: str
     orders: List["Order"] = Relationship(back_populates="user")
 
 class Order(SQLModel, table=True):
