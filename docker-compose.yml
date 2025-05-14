@@ -1,33 +1,39 @@
-version: '3.8'
+version: '3.9'
 
 services:
   db:
     image: mysql:8.0
+    container_name: rtoms_mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: rtoms
+    volumes:
+      - mysql_data:/var/lib/mysql
     ports:
       - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  app:
+  web:
     build: .
-    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
-    volumes:
-      - .:/code
+    container_name: rtoms_app
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
     ports:
       - "8000:8000"
     depends_on:
-      - db
-
-  test:
-    build: .
-    command: ["pytest", "--tb=short", "-q"]
-    depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
-      DB_USERNAME: root
-      DB_PASSWORD: root
-      DB_NAME: rtoms
-      DB_HOST: db
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - DB_NAME=rtoms
+      - DB_HOST=db
+      - TEST_ENV=0
     volumes:
-      - .:/code
+      - .:/app
+
+volumes:
+  mysql_data:
