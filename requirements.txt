@@ -23,6 +23,7 @@ sqlmodel>=0.0.8
 aiomysql>=0.1.0
 aiosqlite>=0.17.0
 cryptography
+dotenv
 
 # Test dependencies
 pytest

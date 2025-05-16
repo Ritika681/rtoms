@@ -3,7 +3,10 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import sessionmaker
 from typing import AsyncGenerator
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 
 DB_USER = os.getenv("DB_USERNAME", "root")
 DB_PASS = os.getenv("DB_PASSWORD", "root")
