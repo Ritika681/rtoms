@@ -6,41 +6,44 @@ from app.model.models import Order
 from database import get_session
 from pydantic import BaseModel
 import json
+import uuid
 
 router = APIRouter(prefix="/api/orders", tags=["Orders"])
 
 
 class OrderCreate(BaseModel):
-    orderId: int
     status: str
     items: List[str]
-    tracking: str
     userId: int
 
 
 class OrderUpdate(BaseModel):
     status: str
 
-
 @router.post("")
 async def create_order(order: OrderCreate, session: AsyncSession = Depends(get_session)):
-    stmt = select(Order).where(Order.orderId == order.orderId)
-    result = await session.exec(stmt)
-    existing = result.first()
-    if existing:
-        raise HTTPException(status_code=400, detail="Order already exists")
+    
+    tracking = f"TRK-{uuid.uuid4().hex[:8].upper()}" 
+    stmt = select(Order).where(Order.tracking == tracking)
+    while (await session.exec(stmt)).first():
+        tracking = f"TRK-{uuid.uuid4().hex[:8].upper()}"
 
     db_order = Order(
-        orderId=order.orderId,
         status=order.status,
         items=json.dumps(order.items),
-        tracking=order.tracking,
+        tracking=tracking,
         userId=order.userId
     )
     session.add(db_order)
     await session.commit()
-    return {"message": "Order created successfully", "orderId": order.orderId}
+    await session.refresh(db_order)
 
+    return {
+        "message": "Order created successfully",
+        "orderId": db_order.orderId,
+        "tracking": db_order.tracking
+    }
+    
 
 @router.get("/{orderId}")
 async def get_order(orderId: int, session: AsyncSession = Depends(get_session)):
