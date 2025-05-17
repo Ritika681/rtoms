@@ -1,5 +1,9 @@
 from sqlmodel import SQLModel, Field, Relationship
-from typing import Optional, List
+from typing import Optional, List, ForwardRef
+import datetime
+
+# Forward declaration
+Order = ForwardRef("Order")
 
 class User(SQLModel, table=True):
     __tablename__ = "users_table"
@@ -7,14 +11,16 @@ class User(SQLModel, table=True):
     name: str
     email: str
     phoneNumber: str
+
     orders: List["Order"] = Relationship(back_populates="user")
 
+
 class Order(SQLModel, table=True):
-    __tablename__ = "orders_table"
-    id: Optional[int] = Field(default=None, primary_key=True)
-    orderId: int = Field(index=True, unique=True)
+    orderId: Optional[int] = Field(default=None, primary_key=True)
     status: str
-    items: str 
-    tracking: str
-    userId: Optional[int] = Field(default=None, foreign_key="users_table.id")
-    user: Optional["User"] = Relationship(back_populates="orders")
+    items: str
+    tracking: str = Field(unique=True)
+    userId: int = Field(foreign_key="users_table.id")  # ✅ Foreign key
+    created_at: Optional[datetime.datetime] = Field(default_factory=datetime.datetime.utcnow)
+
+    user: Optional[User] = Relationship(back_populates="orders")  # ✅ Relationship back

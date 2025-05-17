@@ -46,3 +46,9 @@ async def get_user_orders(userId: int, session: AsyncSession = Depends(get_sessi
             "userId": o.userId
         } for o in orders
     ]
+@router.get("/", response_model=List[UserBase])
+async def get_all_users(session: AsyncSession = Depends(get_session)):
+    stmt = select(User)
+    result = await session.exec(stmt)
+    users = result.all()
+    return users
