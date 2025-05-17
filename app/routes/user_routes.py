@@ -18,7 +18,6 @@ router = APIRouter(prefix="/api/users", tags=["Users"])
 
 @router.post("/signup")
 async def signup_user(user: UserCreate, session: AsyncSession = Depends(get_session)):
-    # Check if user already exists
     stmt = select(User).where(User.email == user.email)
     result = await session.exec(stmt)
     existing_user = result.first()

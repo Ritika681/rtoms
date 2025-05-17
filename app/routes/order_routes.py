@@ -22,13 +22,11 @@ class OrderUpdate(BaseModel):
 
 @router.post("")
 async def create_order(order: OrderCreate, session: AsyncSession = Depends(get_session)):
-    # Create tracking value
-    tracking = f"TRACK-{uuid.uuid4().hex[:8].upper()}"  # short unique tracking code
-
-    # Ensure uniqueness (optional: highly unlikely to clash with UUID)
+    
+    tracking = f"TRK-{uuid.uuid4().hex[:8].upper()}" 
     stmt = select(Order).where(Order.tracking == tracking)
     while (await session.exec(stmt)).first():
-        tracking = f"TRACK-{uuid.uuid4().hex[:8].upper()}"
+        tracking = f"TRK-{uuid.uuid4().hex[:8].upper()}"
 
     db_order = Order(
         status=order.status,

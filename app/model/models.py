@@ -2,7 +2,7 @@ from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional, List, ForwardRef
 import datetime
 
-# Forward declaration
+
 Order = ForwardRef("Order")
 
 class User(SQLModel, table=True):
@@ -20,7 +20,6 @@ class Order(SQLModel, table=True):
     status: str
     items: str
     tracking: str = Field(unique=True)
-    userId: int = Field(foreign_key="users_table.id")  # ✅ Foreign key
+    userId: int = Field(foreign_key="users_table.id")  
     created_at: Optional[datetime.datetime] = Field(default_factory=datetime.datetime.utcnow)
-
-    user: Optional[User] = Relationship(back_populates="orders")  # ✅ Relationship back
+    user: Optional[User] = Relationship(back_populates="orders")
