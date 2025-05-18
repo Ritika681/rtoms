@@ -3,7 +3,7 @@ from typing import Optional, List, ForwardRef
 import datetime
 
 
-Order = ForwardRef("Order")
+Order = ForwardRef("orders_table")
 
 class User(SQLModel, table=True):
     __tablename__ = "users_table"
@@ -16,10 +16,10 @@ class User(SQLModel, table=True):
 
 
 class Order(SQLModel, table=True):
+    __tablename__ = "orders_table"
     orderId: Optional[int] = Field(default=None, primary_key=True)
     status: str
     items: str
     tracking: str = Field(unique=True)
     userId: int = Field(foreign_key="users_table.id")  
-    created_at: Optional[datetime.datetime] = Field(default_factory=datetime.datetime.utcnow)
     user: Optional[User] = Relationship(back_populates="orders")
